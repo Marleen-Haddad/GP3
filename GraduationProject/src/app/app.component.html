@@ -1,0 +1,25 @@
+﻿<!-- nav -->
+<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="user">
+    <div class="navbar-nav">
+      <!-- <option [value]="'Physician'">Physician</option>
+      <option [value]="'Pharmacist'">Pharmacist</option>
+      <option [value]="'Patient'">Patient</option>
+      <option [value]="'Admin'">Admin</option> -->
+        <a class="nav-item nav-link" routerLink="/" *ngIf="user.userRole == 'Admin' ||  user.userRole == 'Physician'" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+        <a class="nav-item nav-link" routerLink="/patientDescription" *ngIf="user.userRole == 'Admin' ||  user.userRole == 'Physician'" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Patinet Description</a>
+        <a class="nav-item nav-link" *ngIf="user.userRole == 'Admin' ||  user.userRole == 'Physician'" routerLink="/users" routerLinkActive="active">Users</a>
+        <a class="nav-item nav-link" *ngIf="user.userRole == 'Admin' || user.userRole == 'Pharmacist'" routerLink="/pharmacies" routerLinkActive="active">Pharmacies</a>
+        <a class="nav-item nav-link" *ngIf="user.userRole == 'Admin' || user.userRole == 'Pharmacist'" routerLink="/pharmacyBranches" routerLinkActive="active">Pharmacy Branches</a>
+        <a class="nav-item nav-link" *ngIf="user.userRole == 'Admin' || user.userRole == 'Pharmacist'" routerLink="/medicines" routerLinkActive="active">Medicines</a>
+        <a class="nav-item nav-link" *ngIf="user.userRole == 'Admin' || user.userRole == 'Pharmacist'"  routerLink="/pharmacyMedicines" routerLinkActive="active">Pharmacy Medicines</a>
+
+        <a class="nav-item nav-link" (click)="logout()">Logout</a>
+    </div>
+</nav>
+
+<!-- main app container -->
+<div class="app-container" [ngClass]="{ 'bg-light': user }">
+    <alert></alert>
+    <router-outlet></router-outlet>
+</div>
+

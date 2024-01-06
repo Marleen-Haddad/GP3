@@ -1,0 +1,43 @@
+﻿<h1 *ngIf="isAddMode">Add Pharmacy Medicine</h1>
+<h1 *ngIf="!isAddMode">Edit Pharmacy Medicine</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="form-row">
+    <div class="form-group col">
+      <label for="pharmacyBranchId">Pharmacy Branch Name</label>
+      <select formControlName="pharmacyBranchId" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.pharmacyBranchId.errors }">
+        <option *ngFor="let pharmacyBranch of pharmacyBranches" [value]="pharmacyBranch.id">{{GetFullName(pharmacyBranch)}}</option>
+      </select>
+      <div *ngIf="submitted && f.pharmacyBranchId.errors" class="invalid-feedback">
+        <div *ngIf="f.pharmacyBranchId.errors.required">Pharmacy Branch is required</div>
+      </div>
+    </div>
+    <div class="form-group col">
+      <label for="medicineId">Medicine Name</label>
+      <select formControlName="medicineId" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.medicineId.errors }">
+        <option *ngFor="let medicine of medicines" [value]="medicine.id">{{medicine.name}}</option>
+      </select>
+      <div *ngIf="submitted && f.medicineId.errors" class="invalid-feedback">
+        <div *ngIf="f.medicineId.errors.required">Medicine is required</div>
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col">
+      <label for="quantity">Quantity</label>
+      <input type="number" formControlName="quantity" class="form-control"
+      [ngClass]="{ 'is-invalid': submitted && f.quantity.errors }">
+      <div *ngIf="submitted && f.quantity.errors" class="invalid-feedback">
+        <div *ngIf="f.quantity.errors.required">Quantity is required</div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <button [disabled]="loading" class="btn btn-primary">
+      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+      Save
+    </button>
+    <a routerLink="/pharmacyMedicines" class="btn btn-link">Cancel</a>
+  </div>
+</form>

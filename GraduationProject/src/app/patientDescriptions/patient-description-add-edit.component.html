@@ -28,17 +28,20 @@
     <thead>
         <tr>
             <th style="width: 30%"> Medicine Name</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let patinetMedicine of patinetMedicines">
+        <tr *ngFor="let patinetMedicine of currentPatinetMedicines">
             <td>{{GetMedicineFullNameFromPharmacyMedicineId(patinetMedicine.pharmacyMedicinesId)}}</td>
+           <td> <button (click)="deletePatientMedicine(patinetMedicine.pharmacyMedicinesId)" class="btn btn-sm btn-danger btn-delete-user" >
+Delete
+          </button>
+          
+        </td>
             <!-- <td style="white-space: nowrap">
               <a routerLink="edit/{{patinetMedicine.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
-                <button (click)="deletePatientMedicine(patinetMedicine.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="patinetDescription.isDeleting">
-                    <span *ngIf="patinetMedicine.isDeleting" class="spinner-border spinner-border-sm"></span>
-                    <span *ngIf="!patinetMedicine.isDeleting">Delete</span>
-                </button>
+
             </td> -->
         </tr>
 

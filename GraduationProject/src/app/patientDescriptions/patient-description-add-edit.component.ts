@@ -12,7 +12,9 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
     loading = false;
     submitted = false;
     users =[];
-    patinetMedicines=[];
+    currentPatinetMedicines=[];
+
+    oldPatinetMedicines=[];
 
     pharmacyMedicines=[];
     pharmacies=[];
@@ -66,7 +68,10 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
                 .subscribe(x => this.form.patchValue(x));
                 this.patinetMedicinesService.getByDescriptionId(this.id)
                 .pipe(first())
-                .subscribe(patinetMedicines => this.patinetMedicines = patinetMedicines);
+                .subscribe(patinetMedicines =>{
+                  this.currentPatinetMedicines = patinetMedicines;
+                  this.oldPatinetMedicines=patinetMedicines;
+                });
         }
 
     }
@@ -121,7 +126,7 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
     }
 
     private createPatinetMedicines(){
-      this.patinetMedicines.forEach(m => {
+      this.currentPatinetMedicines.forEach(m => {
         this.patinetMedicinesService.create(m)
         .pipe(first())
         .subscribe({
@@ -140,7 +145,7 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
     }
 
     private deletePatientMedicnes(){
-      this.patinetMedicines.forEach(m => {
+      this.oldPatinetMedicines.forEach(m => {
         this.patinetMedicinesService.delete(m.id)
         .pipe(first())
         .subscribe({
@@ -168,8 +173,7 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
     }
 
     public AddPatientMedicine(){
-      debugger;
-      this.patinetMedicines.push( { id :'',
+      this.currentPatinetMedicines.push( { id :'',
         descriptionId: this.isAddMode ?'0':this.id,
         pharmacyMedicinesId : this.selected,
         insuranceAccept: false})
@@ -187,5 +191,11 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
     GetMedicineFullNameFromPharmacyMedicineId(pharmacyMedicineId){
       const pharmacyMedicine=this.pharmacyMedicines.find(m=>m.id==pharmacyMedicineId);
       return this.GetMedicineName(pharmacyMedicine.medicineId) + '/'+ this.GetPharmacyName(pharmacyMedicine.pharmacyBranchId);
+    }
+
+    deletePatientMedicine(pharmacyMedicinesId){
+      //const pharmacyMedicine=this.pharmacyMedicines.filter(m=>m.pharmacyMedicinesId==pharmacyMedicinesId);
+      this.currentPatinetMedicines = this.currentPatinetMedicines.filter(pm=>pm.pharmacyMedicinesId != pharmacyMedicinesId);
+
     }
 }

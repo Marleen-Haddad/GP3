@@ -7,11 +7,13 @@ import { LayoutComponent } from './layout.component';
 import { PatinetDescriptionsAddEditComponent } from './patient-description-add-edit.component';
 import { PatientDescriptionListComponent } from './patientDescriptionList.component';
 
+
 @NgModule({
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        PatinetDescriptionsRoutingModule
+        PatinetDescriptionsRoutingModule,
+
     ],
     declarations: [
         LayoutComponent,

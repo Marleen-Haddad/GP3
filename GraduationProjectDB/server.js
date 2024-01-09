@@ -16,6 +16,7 @@ app.use('/pharmacyBranches', require('./pharmacyBranches/pharmacyBranches.contro
 app.use('/medicines', require('./medicines/medicines.controller'));
 app.use('/pharmacyMedicines', require('./pharmacyMedicines/pharmacyMedicines.controller'));
 app.use('/patinetDescription', require('./patinetDescription/patinetDescription.controller'));
+app.use('/patinetMedicines', require('./patinetMedicines/patinetMedicines.controller'));
 
 // global error handler
 app.use(errorHandler);

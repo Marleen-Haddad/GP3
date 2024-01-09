@@ -5,10 +5,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from '@environments/environment';
-import { PatinetDescription } from '@app/_models';
+import { PatinetMedicines } from '@app/_models';
 
 @Injectable({ providedIn: 'root' })
-export class PatinetDescriptionService {
+export class PatinetMedicinesService {
 
 
     constructor(
@@ -22,27 +22,27 @@ export class PatinetDescriptionService {
 
 
 
-    create(patinetDescription: PatinetDescription) {
-      return this.http.post(`${environment.apiUrl}/patinetDescription/create`, patinetDescription);
+    create(patinetMedicines: PatinetMedicines) {
+      return this.http.post(`${environment.apiUrl}/patinetMedicines/create`, patinetMedicines);
     }
 
     getAll() {
-        return this.http.get<PatinetDescription[]>(`${environment.apiUrl}/patinetDescription`);
+        return this.http.get<PatinetMedicines[]>(`${environment.apiUrl}/patinetMedicines`);
     }
 
-    getById(id: string) {
-        return this.http.get<PatinetDescription>(`${environment.apiUrl}/patinetDescription/${id}`);
+    getByDescriptionId(descriptionId: string) {
+        return this.http.get<PatinetMedicines[]>(`${environment.apiUrl}/patinetMedicines/${descriptionId}`);
     }
 
     update(id, params) {
-        return this.http.put(`${environment.apiUrl}/patinetDescription/${id}`, params)
+        return this.http.put(`${environment.apiUrl}/patinetMedicines/${id}`, params)
             .pipe(map(x => {
                 return x;
             }));
     }
 
     delete(id: string) {
-        return this.http.delete(`${environment.apiUrl}/patinetDescription/${id}`)
+        return this.http.delete(`${environment.apiUrl}/patinetMedicines/${id}`)
             .pipe(map(x => {
                 return x;
             }));

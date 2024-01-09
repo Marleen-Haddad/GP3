@@ -31,6 +31,7 @@ async function initialize() {
     db.Medicine = require('../medicines/medicine.model')(sequelize);
     db.PharmacyMedicines=require('../pharmacyMedicines/pharmacyMedicines.model')(sequelize);
     db.PatinetDescription=require('../patinetDescription/patinetDescription.model')(sequelize);
+    db.PatinetMedicines=require('../patinetMedicines/patinetMedicines.model')(sequelize);
 
     // sync all models with database
     await sequelize.sync();

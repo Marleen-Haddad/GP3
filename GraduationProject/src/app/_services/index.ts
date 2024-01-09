@@ -5,3 +5,4 @@ export * from './pharmacyBranches.service';
 export * from './midicine.service';
 export * from './pharmacyMedicines.service';
 export * from './patinetDescription.service';
+export * from './patinetMedicines.service';

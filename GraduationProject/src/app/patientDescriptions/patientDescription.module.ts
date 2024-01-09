@@ -6,12 +6,14 @@ import { PatinetDescriptionsRoutingModule } from './patient-description-routing.
 import { LayoutComponent } from './layout.component';
 import { PatinetDescriptionsAddEditComponent } from './patient-description-add-edit.component';
 import { PatientDescriptionListComponent } from './patientDescriptionList.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
     imports: [
         CommonModule,
         ReactiveFormsModule,
+        FormsModule,
         PatinetDescriptionsRoutingModule,
 
     ],

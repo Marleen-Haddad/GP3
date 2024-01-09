@@ -1,5 +1,5 @@
 ﻿<h1 *ngIf="isAddMode">Add Patinet Description</h1>
-<h1 *ngIf="!isAddMode">Edit Patinet Description</h1>
+<h1 *ngIf="!isAddMode">{{currentUser?.userRole == 'Patient' ? 'Patinet Description' :'Edit Patinet Description'}} </h1>
 <form [formGroup]="form" (ngSubmit)="onSubmit(true)">
   <div class="form-row">
     <div class="form-group col">
@@ -15,38 +15,54 @@
   </div>
   <!---->
   <h1>Patient Medicines</h1>
-  <!-- <button (click)="onSubmit(false)">Add Patient Medicine</button> -->
   <div class="form-row">
     <div class="form-group col">
       <label for="patientId">Medicine Name</label>
-      <select  class="form-control"  (change)="Selected($event)">
-        <option *ngFor="let pharmacyMedicine of pharmacyMedicines" [value]="pharmacyMedicine.id">{{GetMedicineName(pharmacyMedicine.medicineId)}}/{{GetPharmacyName(pharmacyMedicine.pharmacyBranchId)}}</option>
+      <select class="form-control" [ngModelOptions]="{standalone: true}" (change)="Selected($event)" [(ngModel)]="selected">
+        <option disabled selected [value]="''">Please Select</option>
+        <option *ngFor="let pharmacyMedicine of pharmacyMedicines" [value]="pharmacyMedicine.id">
+          {{GetMedicineName(pharmacyMedicine.medicineId)}}/{{GetPharmacyName(pharmacyMedicine.pharmacyBranchId)}}
+        </option>
+      </select>
+    </div>
+    <div class="form-group col">
+      <label for="patientId">Inssurance Approve</label>
+      <select class="form-control" [disabled]=" currentUser?.userRole == 'Physician' || currentUser?.userRole == 'Patient' "  [ngModelOptions]="{standalone: true}" (change)="InssuranceSelected($event)" [(ngModel)]="inssuranceSelected">
+        <option [value]="true">
+          Approved
+        </option>
+        <option selected [value]="false">
+          Not Approved
+        </option>
       </select>
     </div>
   </div>
-<table class="table table-striped">
+  <button type="button" (click)="onSubmit(false)"> {{updatePatientMedicine? 'Update Patient Medicine' : 'Add Patient Medicine'}} </button>
+  <table class="table table-striped">
     <thead>
-        <tr>
-            <th style="width: 30%"> Medicine Name</th>
-            <th></th>
-        </tr>
+      <tr>
+        <th style="width: 30%"> Medicine Name</th>
+        <th style="width: 30%"> Inssurance Approve</th>
+        <th></th>
+      </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let patinetMedicine of currentPatinetMedicines">
-            <td>{{GetMedicineFullNameFromPharmacyMedicineId(patinetMedicine.pharmacyMedicinesId)}}</td>
-           <td> <button (click)="deletePatientMedicine(patinetMedicine.pharmacyMedicinesId)" class="btn btn-sm btn-danger btn-delete-user" >
-Delete
+      <tr *ngFor="let patinetMedicine of currentPatinetMedicines">
+        <td>{{GetMedicineFullNameFromPharmacyMedicineId(patinetMedicine.pharmacyMedicinesId)}}</td>
+        <td>{{patinetMedicine.insuranceAccept ? 'Aprroved' : 'Not Approved'}}</td>
+        <td>
+          <button [disabled]=" currentUser.userRole == 'Patient'" type="button" (click)="editPatientMedicine(patinetMedicine)"
+            class="btn btn-sm btn-primary mr-1">
+            Edit
           </button>
-          
+          <button [disabled]=" currentUser.userRole == 'Patient'" type="button" (click)="deletePatientMedicine(patinetMedicine.pharmacyMedicinesId)"
+            class="btn btn-sm btn-danger btn-delete-user">
+            Delete
+          </button>
         </td>
-            <!-- <td style="white-space: nowrap">
-              <a routerLink="edit/{{patinetMedicine.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
-
-            </td> -->
-        </tr>
-
+      </tr>
     </tbody>
-</table>
+  </table>
   <!---->
   <div class="form-group">
     <button type="submit" [disabled]="loading" class="btn btn-primary">

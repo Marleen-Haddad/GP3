@@ -6,7 +6,7 @@
       <option [value]="'Patient'">Patient</option>
       <option [value]="'Admin'">Admin</option> -->
         <a class="nav-item nav-link" routerLink="/" *ngIf="user.userRole == 'Admin' ||  user.userRole == 'Physician'" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-        <a class="nav-item nav-link" routerLink="/patientDescription" *ngIf="user.userRole == 'Admin' ||  user.userRole == 'Physician'" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Patinet Description</a>
+        <a class="nav-item nav-link" routerLink="/patientDescription"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Patinet Description</a>
         <a class="nav-item nav-link" *ngIf="user.userRole == 'Admin' ||  user.userRole == 'Physician'" routerLink="/users" routerLinkActive="active">Users</a>
         <a class="nav-item nav-link" *ngIf="user.userRole == 'Admin' || user.userRole == 'Pharmacist'" routerLink="/pharmacies" routerLinkActive="active">Pharmacies</a>
         <a class="nav-item nav-link" *ngIf="user.userRole == 'Admin' || user.userRole == 'Pharmacist'" routerLink="/pharmacyBranches" routerLinkActive="active">Pharmacy Branches</a>

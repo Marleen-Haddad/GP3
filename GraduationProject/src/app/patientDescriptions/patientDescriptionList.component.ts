@@ -1,15 +1,17 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 
-import { PatinetDescriptionService } from '@app/_services';
+import { PatinetDescriptionService ,AccountService} from '@app/_services';
 
 @Component({ templateUrl: 'patientDescriptionList.component.html' })
 export class PatientDescriptionListComponent implements OnInit {
   patinetDescriptions = null;
-
-    constructor(private patinetDescriptionService: PatinetDescriptionService) {}
+  currentUser;
+    constructor(private patinetDescriptionService: PatinetDescriptionService,private accountService:AccountService) {}
 
     ngOnInit() {
+      this.accountService.user.subscribe(x => this.currentUser = x);
+
         this.patinetDescriptionService.getAll()
             .pipe(first())
             .subscribe(patinetDescriptions => this.patinetDescriptions = patinetDescriptions);

@@ -1,6 +1,6 @@
 ﻿<div class="p-4">
     <div class="container">
         <h1>Hi {{user.firstName}}!</h1>
-        <p><a routerLink="/users">Manage Users</a></p>
+        <p><a *ngIf="user.userRole =='Admin' || user.userRole=='Physician'" routerLink="/users">Manage Users</a></p>
     </div>
 </div>

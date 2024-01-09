@@ -1,5 +1,5 @@
 ﻿<h1>Patient Description</h1>
-<a routerLink="add" class="btn btn-sm btn-success mb-2">Add Patient Description</a>
+<a routerLink="add" class="btn btn-sm btn-success mb-2" [attr.disabled]="currentUser?.userRole == 'Patient'" >Add Patient Description</a>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -11,8 +11,8 @@
         <tr *ngFor="let patinetDescription of patinetDescriptions">
             <td>{{patinetDescription.id}}</td>
             <td style="white-space: nowrap">
-                <a routerLink="edit/{{patinetDescription.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
-                <button (click)="deletePatientDescription(patinetDescription.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="patinetDescription.isDeleting">
+                <a routerLink="edit/{{patinetDescription.id}}" class="btn btn-sm btn-primary mr-1">{{currentUser?.userRole == 'Patient' ? 'View' :'Edit'}}</a>
+                <button  [disabled]="currentUser?.userRole == 'Patient'" (click)="deletePatientDescription(patinetDescription.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="patinetDescription.isDeleting">
                     <span *ngIf="patinetDescription.isDeleting" class="spinner-border spinner-border-sm"></span>
                     <span *ngIf="!patinetDescription.isDeleting">Delete</span>
                 </button>

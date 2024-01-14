@@ -1,5 +1,5 @@
 ﻿<h1>Patient Description</h1>
-<a routerLink="add" class="btn btn-sm btn-success mb-2" [attr.disabled]="currentUser?.userRole == 'Patient'" >Add Patient Description</a>
+<a routerLink="add" class="btn btn-sm btn-success mb-2" *ngIf="currentUser?.userRole != 'Patient'" >Add Patient Description</a>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -12,7 +12,7 @@
             <td>{{patinetDescription.id}}</td>
             <td style="white-space: nowrap">
                 <a routerLink="edit/{{patinetDescription.id}}" class="btn btn-sm btn-primary mr-1">{{currentUser?.userRole == 'Patient' ? 'View' :'Edit'}}</a>
-                <button  [disabled]="currentUser?.userRole == 'Patient'" (click)="deletePatientDescription(patinetDescription.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="patinetDescription.isDeleting">
+                <button  *ngIf="currentUser?.userRole != 'Patient'" (click)="deletePatientDescription(patinetDescription.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="patinetDescription.isDeleting">
                     <span *ngIf="patinetDescription.isDeleting" class="spinner-border spinner-border-sm"></span>
                     <span *ngIf="!patinetDescription.isDeleting">Delete</span>
                 </button>

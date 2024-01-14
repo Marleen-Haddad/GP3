@@ -74,8 +74,8 @@
   </table>
   <!---->
   <div class="form-group">
-    <button [disabled]="currentUser?.userRole == 'Patient'" type="submit" [disabled]="loading" class="btn btn-primary">
-      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+    <button *ngIf="currentUser?.userRole != 'Patient'" type="submit" [disabled]="loading" class="btn btn-primary">
+      <span *ngIf="loading " class="spinner-border spinner-border-sm mr-1"></span>
       Save
     </button>
     <a routerLink="/patientDescription" class="btn btn-link">Cancel</a>

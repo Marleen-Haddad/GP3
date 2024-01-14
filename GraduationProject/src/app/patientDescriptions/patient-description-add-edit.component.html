@@ -12,6 +12,15 @@
         <div *ngIf="f.patientId.errors.required">Patient is required</div>
       </div>
     </div>
+    <div class="form-group col">
+      <label for="description">Description</label>
+      <input type="text" formControlName="description" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
+
+      <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+        <div *ngIf="f.description.errors.required">Description is required</div>
+      </div>
+    </div>
   </div>
   <!---->
   <h1>Patient Medicines</h1>

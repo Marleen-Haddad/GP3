@@ -47,7 +47,9 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
       .pipe(first())
       .subscribe(users => this.users = users);
     this.form = this.formBuilder.group({
-      patientId: ['', Validators.required]
+      patientId: ['', Validators.required],
+      description : ['', Validators.required]
+
     });
     this.pharmacyBranchesService.getAll()
       .pipe(first())
@@ -64,7 +66,8 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
       .pipe(first())
       .subscribe(medicines => this.medicines = medicines);
     this.form = this.formBuilder.group({
-      patientId: ['', Validators.required]
+      patientId: ['', Validators.required],
+      description:['', Validators.required]
     });
     if (!this.isAddMode) {
       this.patinetDescriptionService.getById(this.id)
@@ -117,7 +120,7 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
       this.loading = true;
       if (this.isAddMode) {
         this.createPatinetDescription();
-        this.createPatinetMedicines();
+        //this.createPatinetMedicines();
       } else {
         this.updatePatinetDescription();
         this.deletePatientMedicnes();
@@ -133,8 +136,24 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
     this.patinetDescriptionService.create(this.form.value)
       .pipe(first())
       .subscribe({
-        next: () => {
+        next: (result) => {
+          this.id=(result as any).id
+          this.currentPatinetMedicines.forEach(m => {
+            m.descriptionId=this.id.toString()
+            this.patinetMedicinesService.create(m)
+              .pipe(first())
+              .subscribe({
+                next: () => {
 
+                },
+                error: error => {
+                  this.alertService.error(error);
+                  this.loading = false;
+                }
+              });
+          });
+          this.alertService.success(this.isAddMode ? 'PatinetDescription added successfully' : 'PatinetDescription updated successfully', { keepAfterRouteChange: true });
+          this.router.navigate(['/patientDescription'], { relativeTo: this.route });
         },
         error: error => {
           this.alertService.error(error);

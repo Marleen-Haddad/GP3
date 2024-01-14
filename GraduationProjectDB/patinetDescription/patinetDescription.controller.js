@@ -19,14 +19,15 @@ module.exports = router;
 
 function createSchema(req, res, next) {
     const schema = Joi.object({
-        patientId: Joi.string().required() ,     
+        patientId: Joi.string().required() ,    
+        description: Joi.string().required() ,     
     });
     validateRequest(req, next, schema);
 }
 
 function create(req, res, next) {
     patinetDescriptionService.create(req.body)
-        .then(() => res.json({ message: 'Creation successful' }))
+        .then((id) => res.json({ id: id  , message: 'Creation successful' }))
         .catch(next);
 }
 
@@ -47,7 +48,7 @@ function getById(req, res, next) {
 function updateSchema(req, res, next) {
     const schema = Joi.object({
         patientId: Joi.string().required() ,
-
+        description:Joi.string().required() ,
     });
     validateRequest(req, next, schema);
 }

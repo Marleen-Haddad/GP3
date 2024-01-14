@@ -22,7 +22,9 @@ async function getById(id) {
 }
 
 async function create(params) {
-    await db.PatinetDescription.create(params);
+  const patient = await db.PatinetDescription.create(params);
+  const lastInsertedId = patient.id;
+  return lastInsertedId;
 }
 
 async function update(id, params) {

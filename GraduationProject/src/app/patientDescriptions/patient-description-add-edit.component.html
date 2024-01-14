@@ -4,7 +4,7 @@
   <div class="form-row">
     <div class="form-group col">
       <label for="patientId">Patient Name</label>
-      <select formControlName="patientId" class="form-control"
+      <select [disabled]="currentUser?.userRole == 'Patient'" formControlName="patientId" class="form-control"
         [ngClass]="{ 'is-invalid': submitted && f.patientId.errors }">
         <option *ngFor="let user of users" [value]="user.id">{{user.firstName}} - {{user.lastName}}</option>
       </select>
@@ -14,7 +14,7 @@
     </div>
     <div class="form-group col">
       <label for="description">Description</label>
-      <input type="text" formControlName="description" class="form-control"
+      <input [disabled]="currentUser?.userRole == 'Patient'" type="text" formControlName="description" class="form-control"
           [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
 
       <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
@@ -27,7 +27,7 @@
   <div class="form-row">
     <div class="form-group col">
       <label for="patientId">Medicine Name</label>
-      <select class="form-control" [ngModelOptions]="{standalone: true}" (change)="Selected($event)" [(ngModel)]="selected">
+      <select [disabled]="currentUser?.userRole == 'Patient'" class="form-control" [ngModelOptions]="{standalone: true}" (change)="Selected($event)" [(ngModel)]="selected">
         <option disabled selected [value]="''">Please Select</option>
         <option *ngFor="let pharmacyMedicine of pharmacyMedicines" [value]="pharmacyMedicine.id">
           {{GetMedicineName(pharmacyMedicine.medicineId)}}/{{GetPharmacyName(pharmacyMedicine.pharmacyBranchId)}}
@@ -36,7 +36,7 @@
     </div>
     <div class="form-group col">
       <label for="patientId">Inssurance Approve</label>
-      <select class="form-control" [disabled]=" currentUser?.userRole == 'Physician' || currentUser?.userRole == 'Patient' "  [ngModelOptions]="{standalone: true}" (change)="InssuranceSelected($event)" [(ngModel)]="inssuranceSelected">
+      <select  class="form-control" [disabled]=" currentUser?.userRole == 'Physician' || currentUser?.userRole == 'Patient' "  [ngModelOptions]="{standalone: true}" (change)="InssuranceSelected($event)" [(ngModel)]="inssuranceSelected">
         <option [value]="true">
           Approved
         </option>
@@ -46,7 +46,7 @@
       </select>
     </div>
   </div>
-  <button type="button" (click)="onSubmit(false)"> {{updatePatientMedicine? 'Update Patient Medicine' : 'Add Patient Medicine'}} </button>
+  <button type="button" [disabled]="currentUser?.userRole == 'Patient'" (click)="onSubmit(false)"> {{updatePatientMedicine? 'Update Patient Medicine' : 'Add Patient Medicine'}} </button>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -74,7 +74,7 @@
   </table>
   <!---->
   <div class="form-group">
-    <button type="submit" [disabled]="loading" class="btn btn-primary">
+    <button [disabled]="currentUser?.userRole == 'Patient'" type="submit" [disabled]="loading" class="btn btn-primary">
       <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
       Save
     </button>

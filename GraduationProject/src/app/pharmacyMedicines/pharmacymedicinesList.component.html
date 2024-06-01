@@ -1,0 +1,31 @@
+﻿<h1>Pharmacy Medicines</h1>
+<a routerLink="add" class="btn btn-sm btn-success mb-2">Add Medicine To Pharmacy</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width: 30%">Pharmacy Name</th>
+            <th style="width: 30%">Name</th>
+            <th style="width: 30%">Quantity</th>
+            <th style="width: 10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let pharmacyMedicine of pharmacyMedicines">
+            <td> {{GetPharmacyName(pharmacyMedicine.pharmacyBranchId)}}</td>
+            <td>{{GetMedicineName(pharmacyMedicine.medicineId)}}</td>
+            <td>{{pharmacyMedicine.quantity}}</td>
+            <td style="white-space: nowrap">
+                <a routerLink="edit/{{pharmacyMedicine.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
+                <button (click)="deletePharmacyMedicine(pharmacyMedicine.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="pharmacyMedicine.isDeleting">
+                    <span *ngIf="pharmacyMedicine.isDeleting" class="spinner-border spinner-border-sm"></span>
+                    <span *ngIf="!pharmacyMedicine.isDeleting">Delete</span>
+                </button>
+            </td>
+        </tr>
+        <tr *ngIf="!pharmacyMedicines">
+            <td colspan="4" class="text-center">
+                <span class="spinner-border spinner-border-lg align-center"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -3,4 +3,6 @@ export class PatinetMedicines {
   descriptionId: string;
   pharmacyMedicinesId : string;
   insuranceAccept: boolean;
+  insurancePrecentage: number;
+  medicinePrice:number;
 }

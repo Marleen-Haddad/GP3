@@ -68,7 +68,9 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
     this.form = this.formBuilder.group({
       patientId: ['', Validators.required],
       description:['', Validators.required],
-      medicineDescription: ['', Validators.required]
+      medicineDescription: ['', Validators.required],
+      insurancePrecentage:['', Validators.required],
+      medicinePrice: ['', Validators.required]
     });
     if (!this.isAddMode) {
       this.patinetDescriptionService.getById(this.id)
@@ -94,7 +96,7 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
     this.selected = event.target.value;
 
   }
-
+  insurancePrecentage: number
   updatePatientMedicine: boolean = false;
   public editPatientMedicine(patientMedicine) {
     const selectMedicineBranch= this.pharmacyMedicines.find(pm=>pm.id==patientMedicine.pharmacyMedicinesId)
@@ -102,6 +104,8 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
     this.pharmacyMedicinesForPharmacy= this.pharmacyMedicines.filter(p=>p.pharmacyBranchId == this.pselected)
     this.selected = patientMedicine.pharmacyMedicinesId;
     this.inssuranceSelected = patientMedicine.insuranceAccept;
+    this.insurancePrecentage =patientMedicine.insurancePrecentage
+    this.medicinePrice=patientMedicine.medicinePrice
     this.updatePatientMedicine = true;
   }
 
@@ -202,7 +206,6 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
     });
   }
   private updatePatinetDescription() {
-    debugger
     this.patinetDescriptionService.update(this.id, this.form.value)
       .pipe(first())
       .subscribe({
@@ -216,12 +219,16 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
   }
 
   public AddUpdatePatientMedicine() {
+    debugger
     if (!this.updatePatientMedicine) {
       this.currentPatinetMedicines.push({
         id: '',
         descriptionId: this.isAddMode ? '0' : this.id,
         pharmacyMedicinesId: this.selected,
-        insuranceAccept: this.inssuranceSelected
+        insuranceAccept: this.inssuranceSelected,
+        insurancePrecentage: this.insurancePrecentage,
+        medicinePrice: this.medicinePrice
+
       });
     }
     else {
@@ -230,7 +237,9 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
         id: '',
         descriptionId: this.isAddMode ? '0' : this.id,
         pharmacyMedicinesId: this.selected,
-        insuranceAccept: this.inssuranceSelected
+        insuranceAccept: this.inssuranceSelected,
+        insurancePrecentage: this.insurancePrecentage,
+        medicinePrice: this.medicinePrice
       });
       this.updatePatientMedicine=false;
     }
@@ -258,5 +267,16 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
     const selectedBranchId = (event.target as HTMLSelectElement).value;
     this.pharmacyMedicinesForPharmacy= this.pharmacyMedicines.filter(p=>p.pharmacyBranchId == selectedBranchId)
   }
-
+  medicinePrice=0
+  SelectMedicine(event){
+    const pharmacyMedicineId = (event.target as HTMLSelectElement).value;
+    this.selected=pharmacyMedicineId
+    const pharmacyMedicine = this.pharmacyMedicines.find(p=>p.id == pharmacyMedicineId)
+    const medicine= this.medicines.find(m=>m.id == pharmacyMedicine.medicineId)
+    this.medicinePrice= medicine.price
+  }
+  ChangeMedicinePrice(event){
+    const insuranceP = (event.target as HTMLSelectElement).value ;
+    this.medicinePrice=this.medicinePrice- (this.medicinePrice *( Number(insuranceP) /100))
+  }
 }

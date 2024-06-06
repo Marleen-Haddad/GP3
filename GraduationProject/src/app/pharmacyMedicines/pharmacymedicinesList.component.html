@@ -13,6 +13,7 @@
         <tr *ngFor="let pharmacyMedicine of pharmacyMedicines">
             <td> {{GetPharmacyName(pharmacyMedicine.pharmacyBranchId)}}</td>
             <td>{{GetMedicineName(pharmacyMedicine.medicineId)}}</td>
+            <td>{{GetMedicinePrice(pharmacyMedicine.medicineId)}}</td>
             <td>{{pharmacyMedicine.quantity}}</td>
             <td style="white-space: nowrap">
                 <a routerLink="edit/{{pharmacyMedicine.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>

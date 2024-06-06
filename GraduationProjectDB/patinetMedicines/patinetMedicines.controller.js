@@ -21,7 +21,9 @@ function createSchema(req, res, next) {
     const schema = Joi.object({
         descriptionId: Joi.string().required(),
         pharmacyMedicinesId : Joi.string().required(),
-        insuranceAccept: Joi.bool().required(),    
+        insuranceAccept: Joi.bool().required(),  
+        medicinePrice: Joi.number().required(),
+        insurancePrecentage: Joi.number().required(),    
     });
     validateRequest(req, next, schema);
 }
@@ -51,6 +53,8 @@ function updateSchema(req, res, next) {
         descriptionId: Joi.string().required(),
         pharmacyMedicinesId : Joi.string().required(),
         insuranceAccept: Joi.bool().required(),    
+        medicinePrice: Joi.number().empty(''),
+        insurancePrecentage: Joi.number().empty(''),  
     });
     validateRequest(req, next, schema);
 }

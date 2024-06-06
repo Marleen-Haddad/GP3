@@ -46,4 +46,9 @@ export class PharmacyMedicinesListComponent implements OnInit {
     const medicine=this.medicines.find(m=>m.id==medicineId);
     return medicine.name;
   }
+
+  GetMedicinePrice(medicineId: string){
+    const medicine=this.medicines.find(m=>m.id==medicineId);
+    return medicine.price;
+  }
 }

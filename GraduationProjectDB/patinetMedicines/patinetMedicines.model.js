@@ -7,6 +7,9 @@ function model(sequelize) {
         descriptionId: { type: DataTypes.STRING, allowNull: false },
         pharmacyMedicinesId : { type: DataTypes.STRING, allowNull: false },
         insuranceAccept: { type: DataTypes.BOOLEAN, allowNull: false },
+        medicinePrice: { type: DataTypes.DOUBLE, allowNull: false },
+        insurancePrecentage: { type: DataTypes.DOUBLE, allowNull: false },
+
     };
 
     const options = {

@@ -51,7 +51,7 @@
     <div class="form-group col">
       <label for="patientId">Medicine Name</label>
       <select [disabled]="currentUser?.userRole == 'Patient'" class="form-control" [ngModelOptions]="{standalone: true}"
-        (change)="Selected($event)" [(ngModel)]="selected">
+        (change)="SelectMedicine($event)" [(ngModel)]="selected">
         <option disabled selected [value]="''">Please Select</option>
         <option *ngFor="let pharmacyMedicine of pharmacyMedicinesForPharmacy" [value]="pharmacyMedicine.id">
           {{GetMedicineName(pharmacyMedicine.medicineId)}}
@@ -62,7 +62,7 @@
   </div>
   <div class="form-row">
     <div class="form-group col">
-      <label for="patientId">Inssurance Approve</label>
+      <label for="inssurance">Inssurance Approve</label>
       <select class="form-control"
         [disabled]=" currentUser?.userRole == 'Physician' || currentUser?.userRole == 'Patient' "
         [ngModelOptions]="{standalone: true}" (change)="InssuranceSelected($event)" [(ngModel)]="inssuranceSelected">
@@ -73,6 +73,14 @@
           Not Approved
         </option>
       </select>
+    </div>
+    <div class="form-group col">
+      <label for="insurancePrecentage">Insurance Precentage</label>
+      <input type="number" formControlName="insurancePrecentage" [(ngModel)]="insurancePrecentage"  (change)="ChangeMedicinePrice($event)" class="form-control" />
+    </div>
+    <div class="form-group col">
+      <label for="medicinePrice">Medicine Price</label>
+      <input disabled type="number" formControlName="medicinePrice" [(ngModel)]="medicinePrice" class="form-control"/>
     </div>
   </div>
   <button type="button" [disabled]="currentUser?.userRole == 'Patient'" (click)="onSubmit(false)">

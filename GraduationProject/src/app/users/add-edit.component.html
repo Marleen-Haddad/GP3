@@ -54,10 +54,10 @@
         <div *ngIf="f.userRole.errors.required">Role is required</div>
       </div>
     </div>
-    <div *ngIf="currentUser.userRole != 'Admin'" class="form-group col">
+    <div *ngIf="currentUser.userRole == 'Admin' || currentUser.userRole != 'Pharmacist'" class="form-group col">
       <label for="userPharmacy">User Pharmacy</label>
       <select formControlName="userPharmacy" class="form-control" >
-        <option *ngFor="let pharmacy of pharmacies" [value]="pharmacy.id" >{{pharmacy.name}}</option>
+        <option *ngFor="let pharmacy of pharmacyBranches" [value]="pharmacy.id" >{{GetPharmacyFullName(pharmacy)}}</option>
       </select>
     </div>
   </div>

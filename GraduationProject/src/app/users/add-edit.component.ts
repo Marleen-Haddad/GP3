@@ -2,8 +2,8 @@
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-import{ Pharmacy } from '@app/_models';
-import { AccountService, AlertService,PharmacyService } from '@app/_services';
+import{ Pharmacy, PharmacyBranches } from '@app/_models';
+import { AccountService, AlertService,PharmacyBranchesService,PharmacyService } from '@app/_services';
 
 @Component({ templateUrl: 'add-edit.component.html' })
 export class AddEditComponent implements OnInit {
@@ -14,6 +14,7 @@ export class AddEditComponent implements OnInit {
     submitted = false;
     currentUser = null;
     pharmacies:Pharmacy[];
+    pharmacyBranches:Pharmacy[];
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
@@ -21,13 +22,15 @@ export class AddEditComponent implements OnInit {
         private accountService: AccountService,
         private alertService: AlertService,
         private pharmacyService: PharmacyService,
-
+        private pharmacyBranchesService : PharmacyBranchesService
     ) {}
 
     ngOnInit() {
       this.pharmacyService.getAll()
       .pipe(first())
       .subscribe(pharmacies => this.pharmacies = pharmacies);
+      this.pharmacyBranchesService.getAll().pipe(first())
+      .subscribe(pharmaciesBranches => this.pharmacyBranches = pharmaciesBranches);
         this.accountService.user.subscribe(x => this.currentUser = x);
 
         this.id = this.route.snapshot.params['id'];
@@ -91,9 +94,11 @@ export class AddEditComponent implements OnInit {
                 }
             });
     }
-
+    GetPharmacyFullName(pharmacyBranch : PharmacyBranches){
+      const pharmacy = this.pharmacies.find(p=>p.id ==  pharmacyBranch.pharmacyId);
+      return pharmacy.name + "-" + pharmacyBranch.name ;
+    }
     private updateUser() {
-      debugger;
         this.accountService.update(this.id, this.form.value)
             .pipe(first())
             .subscribe({

@@ -20,7 +20,7 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
   pharmacies = [];
   medicines = [];
   pharmacyBranches = [];
-
+  pharmacyMedicinesForPharmacy=[];
   currentUser = null;
 
   constructor(
@@ -88,6 +88,7 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
   get f() { return this.form.controls; }
 
   selected: string = '';
+  pselected: string = '';
   Selected(event: any) {
 
     this.selected = event.target.value;
@@ -96,6 +97,9 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
 
   updatePatientMedicine: boolean = false;
   public editPatientMedicine(patientMedicine) {
+    const selectMedicineBranch= this.pharmacyMedicines.find(pm=>pm.id==patientMedicine.pharmacyMedicinesId)
+    this.pselected=selectMedicineBranch.pharmacyBranchId
+    this.pharmacyMedicinesForPharmacy= this.pharmacyMedicines.filter(p=>p.pharmacyBranchId == this.pselected)
     this.selected = patientMedicine.pharmacyMedicinesId;
     this.inssuranceSelected = patientMedicine.insuranceAccept;
     this.updatePatientMedicine = true;
@@ -121,7 +125,7 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
       this.loading = true;
       if (this.isAddMode) {
         this.createPatinetDescription();
-        this.createPatinetMedicines();
+        //this.createPatinetMedicines();
       } else {
         this.updatePatinetDescription();
         this.deletePatientMedicnes();
@@ -250,6 +254,9 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
     this.currentPatinetMedicines = this.currentPatinetMedicines.filter(pm => pm.pharmacyMedicinesId != pharmacyMedicinesId);
 
   }
-
+  SelectPharmacyMedicines(event){
+    const selectedBranchId = (event.target as HTMLSelectElement).value;
+    this.pharmacyMedicinesForPharmacy= this.pharmacyMedicines.filter(p=>p.pharmacyBranchId == selectedBranchId)
+  }
 
 }

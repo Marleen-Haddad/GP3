@@ -39,15 +39,28 @@
   <h1>Patient Medicines</h1>
   <div class="form-row">
     <div class="form-group col">
+      <label for="patientId">Pharmacy Name</label>
+      <select [disabled]="currentUser?.userRole == 'Patient'" class="form-control" [ngModelOptions]="{standalone: true}"
+      (change)="SelectPharmacyMedicines($event)"  [(ngModel)]="pselected">
+        <option disabled selected [value]="''">Please Select</option>
+        <option *ngFor="let pharmacyBranch of pharmacyBranches" [value]="pharmacyBranch.id">
+          {{GetPharmacyName(pharmacyBranch.id)}}
+        </option>
+      </select>
+    </div>
+    <div class="form-group col">
       <label for="patientId">Medicine Name</label>
       <select [disabled]="currentUser?.userRole == 'Patient'" class="form-control" [ngModelOptions]="{standalone: true}"
         (change)="Selected($event)" [(ngModel)]="selected">
         <option disabled selected [value]="''">Please Select</option>
-        <option *ngFor="let pharmacyMedicine of pharmacyMedicines" [value]="pharmacyMedicine.id">
-          {{GetMedicineName(pharmacyMedicine.medicineId)}}/{{GetPharmacyName(pharmacyMedicine.pharmacyBranchId)}}
+        <option *ngFor="let pharmacyMedicine of pharmacyMedicinesForPharmacy" [value]="pharmacyMedicine.id">
+          {{GetMedicineName(pharmacyMedicine.medicineId)}}
         </option>
       </select>
     </div>
+
+  </div>
+  <div class="form-row">
     <div class="form-group col">
       <label for="patientId">Inssurance Approve</label>
       <select class="form-control"

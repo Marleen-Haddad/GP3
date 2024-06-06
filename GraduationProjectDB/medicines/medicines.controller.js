@@ -17,7 +17,8 @@ module.exports = router;
 
 function createSchema(req, res, next) {
     const schema = Joi.object({
-        name: Joi.string().required()       
+        name: Joi.string().required() ,   
+        price: Joi.number().required() 
     });
     validateRequest(req, next, schema);
 }
@@ -43,7 +44,7 @@ function getById(req, res, next) {
 function updateSchema(req, res, next) {
     const schema = Joi.object({
         name: Joi.string().empty(''),
-        
+        price: Joi.number().empty('')
     });
     validateRequest(req, next, schema);
 }

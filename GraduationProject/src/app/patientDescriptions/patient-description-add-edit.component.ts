@@ -45,7 +45,7 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
     this.isAddMode = !this.id;
     this.accountService.getAll()
       .pipe(first())
-      .subscribe(users => this.users = users);
+      .subscribe(users => this.users = users.filter(u=>u.userRole=='Patient'));
     this.form = this.formBuilder.group({
       patientId: ['', Validators.required],
       description : ['', Validators.required],

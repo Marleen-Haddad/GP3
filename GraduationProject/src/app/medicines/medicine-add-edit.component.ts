@@ -30,7 +30,8 @@ export class MedicinesAddEditComponent implements OnInit {
         this.isAddMode = !this.id;
 
         this.form = this.formBuilder.group({
-            name: ['', Validators.required]
+            name: ['', Validators.required],
+            price: ['', Validators.required]
         });
 
         if (!this.isAddMode) {

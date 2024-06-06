@@ -48,8 +48,8 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
       .subscribe(users => this.users = users);
     this.form = this.formBuilder.group({
       patientId: ['', Validators.required],
-      description : ['', Validators.required]
-
+      description : ['', Validators.required],
+      medicineDescription: ['', Validators.required]
     });
     this.pharmacyBranchesService.getAll()
       .pipe(first())
@@ -67,7 +67,8 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
       .subscribe(medicines => this.medicines = medicines);
     this.form = this.formBuilder.group({
       patientId: ['', Validators.required],
-      description:['', Validators.required]
+      description:['', Validators.required],
+      medicineDescription: ['', Validators.required]
     });
     if (!this.isAddMode) {
       this.patinetDescriptionService.getById(this.id)
@@ -120,7 +121,7 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
       this.loading = true;
       if (this.isAddMode) {
         this.createPatinetDescription();
-        //this.createPatinetMedicines();
+        this.createPatinetMedicines();
       } else {
         this.updatePatinetDescription();
         this.deletePatientMedicnes();
@@ -197,6 +198,7 @@ export class PatinetDescriptionsAddEditComponent implements OnInit {
     });
   }
   private updatePatinetDescription() {
+    debugger
     this.patinetDescriptionService.update(this.id, this.form.value)
       .pipe(first())
       .subscribe({

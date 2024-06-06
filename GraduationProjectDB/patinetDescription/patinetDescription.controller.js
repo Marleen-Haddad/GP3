@@ -20,7 +20,8 @@ module.exports = router;
 function createSchema(req, res, next) {
     const schema = Joi.object({
         patientId: Joi.string().required() ,    
-        description: Joi.string().required() ,     
+        description: Joi.string().required() ,   
+        medicineDescription: Joi.string().required() ,   
     });
     validateRequest(req, next, schema);
 }
@@ -49,6 +50,7 @@ function updateSchema(req, res, next) {
     const schema = Joi.object({
         patientId: Joi.string().required() ,
         description:Joi.string().required() ,
+        medicineDescription: Joi.string().required() ,   
     });
     validateRequest(req, next, schema);
 }

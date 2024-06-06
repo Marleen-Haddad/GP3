@@ -15,8 +15,18 @@ export class PatientDescriptionListComponent implements OnInit {
       this.patinetDescriptionService.getAll()
         .pipe(first())
         .subscribe(patinetDescriptions => {
-          debugger
           if (this.currentUser.userRole == 'Patient') { this.patinetDescriptions = patinetDescriptions.filter(d => d.patientId == this.currentUser.id); }
+          if (this.currentUser.userRole == 'Physician') {
+            this.accountService.getAll()
+            .pipe(first())
+            .subscribe(users =>{
+              const patientUsers= users.filter(u=>u.userRole==='Patient')
+              this.patinetDescriptions = patinetDescriptions.filter(d =>
+                patientUsers.some(p => p.id === d.patientId)
+              );}
+              );
+
+          }
           else { this.patinetDescriptions = patinetDescriptions }
         });
     });
